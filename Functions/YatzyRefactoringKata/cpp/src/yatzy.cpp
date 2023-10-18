@@ -19,112 +19,97 @@ std::map<std::string, int> Yatzy::ScorePerCategory()
     if (d5 == 1) 
         sum++;
 
-    scorePerCategory["Ones"] = sum;
 
-    //
-
-    return scorePerCategory;
-}
-
-int Yatzy::Chance(int d1, int d2, int d3, int d4, int d5)
-{
+    //chance
     int total = 0;
     total += d1;
     total += d2;
     total += d3;
     total += d4;
     total += d5;
-    return total;
-}
 
 
-int Yatzy::yatzy(int dice[])
-{
-    int counts[6] = {0,0,0,0,0,0};
+    //
+    int result = 0;
+    int counts[6] = {0, 0, 0, 0, 0, 0};
     for (int i = 0; i != 5; i++)
         counts[dice[i]-1]++;
     for (int i = 0; i != 6; i++)
         if (counts[i] == 5)
-            return 50;
-    return 0;
-}
+            result = 50;
 
 
-int Yatzy::Twos(int d1, int d2, int d3, int d4, int d5) {
-    int sum = 0;
-    if (d1 == 2) sum += 2;
-    if (d2 == 2) sum += 2;
-    if (d3 == 2) sum += 2;
-    if (d4 == 2) sum += 2;
-    if (d5 == 2) sum += 2;
-    return sum;
-}
+    int sumTwos = 0;
+    if (d1 == 2) sumTwos += 2;
+    if (d2 == 2) sumTwos += 2;
+    if (d3 == 2) sumTwos += 2;
+    if (d4 == 2) sumTwos += 2;
+    if (d5 == 2) sumTwos += 2;
 
 
-int Yatzy::Threes(int d1, int d2, int d3, int d4, int d5) {
-    int s;    
-    s = 0;
+    int s = 0;
     if (d1 == 3) s += 3;
     if (d2 == 3) s += 3;
     if (d3 == 3) s += 3;
     if (d4 == 3) s += 3;
     if (d5 == 3) s += 3;
-    return s;
-}
 
-Yatzy::Yatzy() : dice(5)
-{
-}
 
-Yatzy::Yatzy(int d1, int d2, int d3, int d4, int _5) : dice{d1, d2, d3, d4, _5}
-{
-}
-
-int Yatzy::Fours()
-{
-    int sum;    
-    sum = 0;
+    int sum4;    
+    sum4 = 0;
     for (int at = 0; at != 5; at++) {
         if (dice[at] == 4) {
-            sum += 4;
+            sum4 += 4;
         }
     }
-    return sum;
-}
 
 
-int Yatzy::Fives()
-{
-    int s = 0;
-    int i;
-    for (i = 0; i < 5; i++) 
+    // Fives
+    int sFive = 0;
+    for (int i = 0; i < 5; i++) 
         if (dice[i] == 5)
-            s = s + 5;
-    return s;
-}
+            sFive = sFive + 5;
 
-int Yatzy::sixes()
-{
-    int sum = 0;
+
+
+    int sumLarge = 0;
     for (int at = 0; at < 5; at++) 
         if (dice[at] == 6)
-            sum = sum + 6;
-    return sum;
-}
+            sumLarge = sumLarge + 6;
 
-int Yatzy::ScorePair(int d1, int d2, int d3, int d4, int d5)
-{
-    int counts[6] = {0,0,0,0,0,0};
-    counts[d1-1]++;
-    counts[d2-1]++;
-    counts[d3-1]++;
-    counts[d4-1]++;
-    counts[d5-1]++;
-    int at;
-    for (at = 0; at != 6; at++)
-        if (counts[6-at-1] == 2)
-            return (6-at)*2;
-    return 0;
+
+    //
+    int pCounts[6] = {0,0,0,0,0,0};
+    pCounts[d1-1]++;
+    pCounts[d2-1]++;
+    pCounts[d3-1]++;
+    pCounts[d4-1]++;
+    pCounts[d5-1]++;
+    int pScore = 0;
+    for (int at = 0; at != 6; at++)
+        if (pCounts[6-at-1] == 2){
+            pScore = (6-at)*2;
+            break;
+        }
+
+
+    scorePerCategory["Ones"] = sum;
+    scorePerCategory["Twos"] = sumTwos;
+    scorePerCategory["Threes"] = s;
+    scorePerCategory["Fours"] = sum4;
+    scorePerCategory["Fives"] = sFive;
+    scorePerCategory["Sixes"] = sumLarge;
+    scorePerCategory["Pair"] = pScore;
+    scorePerCategory["TwoPair"] = TwoPair(d1, d2, d3, d4, d5);
+    scorePerCategory["FourOfAKind"] = FourOfAKind(d1, d2, d3, d4, d5);
+    scorePerCategory["ThreeOfAKind"] = ThreeOfAKind(d1, d2, d3, d4, d5);
+    scorePerCategory["SmallStraight"] = SmallStraight(d1, d2, d3, d4, d5);
+    scorePerCategory["LargeStraight"] = LargeStraight(d1, d2, d3, d4, d5);
+    scorePerCategory["FullHouse"] = FullHouse(d1, d2, d3, d4, d5);
+    scorePerCategory["Yatzy"] = result;
+    scorePerCategory["Chance"] = total;
+
+    return scorePerCategory;
 }
 
 int Yatzy::TwoPair(int d1, int d2, int d3, int d4, int d5)
