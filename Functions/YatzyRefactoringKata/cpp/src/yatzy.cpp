@@ -1,5 +1,30 @@
 #include "yatzy.hpp"
-#include <string>
+
+std::map<std::string, int> Yatzy::ScorePerCategory()
+{
+    std::map<std::string, int> scorePerCategory;
+
+    // try ones
+    int d1 = dice[0];
+    int d2 = dice[1];
+    int d3 = dice[2];
+    int d4 = dice[3];
+    int d5 = dice[4];
+
+    int sum = 0;
+    if (d1 == 1) sum++;
+    if (d2 == 1) sum++;
+    if (d3 == 1) sum++;
+    if (d4 == 1) sum++;
+    if (d5 == 1) 
+        sum++;
+
+    scorePerCategory["Ones"] = sum;
+
+    //
+
+    return scorePerCategory;
+}
 
 int Yatzy::Chance(int d1, int d2, int d3, int d4, int d5)
 {
@@ -24,17 +49,6 @@ int Yatzy::yatzy(int dice[])
     return 0;
 }
 
-int Yatzy::Ones(int d1, int d2, int d3, int d4, int d5) {
-    int sum = 0;
-    if (d1 == 1) sum++;
-    if (d2 == 1) sum++;
-    if (d3 == 1) sum++;
-    if (d4 == 1) sum++;
-    if (d5 == 1) 
-        sum++;
-
-    return sum;
-}
 
 int Yatzy::Twos(int d1, int d2, int d3, int d4, int d5) {
     int sum = 0;

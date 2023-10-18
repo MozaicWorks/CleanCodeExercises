@@ -14,6 +14,17 @@ static int *ints(int a, int b, int c, int d, int e)
     return r;
 }
 
+TEST_CASE("category Ones")
+{
+    CHECK_EQ(1, Yatzy(1,2,3,4,5).ScorePerCategory()["Ones"]);
+    CHECK_EQ(2, Yatzy(1, 2, 1, 4, 5).ScorePerCategory()["Ones"]);
+    CHECK_EQ(0, Yatzy(6, 2, 2, 4, 5).ScorePerCategory()["Ones"]);
+    CHECK_EQ(4, Yatzy(1, 2, 1, 1, 1).ScorePerCategory()["Ones"]);
+}
+
+
+
+
 TEST_CASE("Chance scores sum of all dice")
 {
     CHECK_EQ(15, Yatzy().Chance(2, 3, 4, 5, 1));
@@ -25,14 +36,6 @@ TEST_CASE("Yatzy scores 50")
     CHECK_EQ(50, Yatzy().yatzy(ints(4, 4, 4, 4, 4)));
     CHECK_EQ(50, Yatzy().yatzy(ints(6, 6, 6, 6, 6)));
     CHECK_EQ(0, Yatzy().yatzy(ints(6, 6, 6, 6, 3)));
-}
-
-TEST_CASE("ones")
-{
-    CHECK_EQ(1, Yatzy().Ones(1, 2, 3, 4, 5));
-    CHECK_EQ(2, Yatzy().Ones(1, 2, 1, 4, 5));
-    CHECK_EQ(0, Yatzy().Ones(6, 2, 2, 4, 5));
-    CHECK_EQ(4, Yatzy().Ones(1, 2, 1, 1, 1));
 }
 
 TEST_CASE("twos")

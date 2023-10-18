@@ -1,6 +1,8 @@
 #ifndef YATZY_INCLUDED
 #define YATZY_INCLUDED
+#include <string>
 #include <vector>
+#include <map>
 
 class Yatzy
 {
@@ -8,7 +10,6 @@ public:
 
     static int Chance(int d1, int d2, int d3, int d4, int d5);
     static int yatzy(int dice[]);
-    static int Ones(int d1, int d2, int d3, int d4, int d5);
     static int Twos(int d1, int d2, int d3, int d4, int d5);
     static int Threes(int d1, int d2, int d3, int d4, int d5);
 
@@ -29,6 +30,7 @@ public:
     static int LargeStraight(int d1, int d2, int d3, int d4, int d5);
     static int FullHouse(int d1, int d2, int d3, int d4, int d5);
 
+    std::map<std::string, int> ScorePerCategory();
 };
 
 #endif
