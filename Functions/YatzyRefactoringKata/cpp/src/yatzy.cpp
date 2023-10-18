@@ -1,5 +1,5 @@
 #include "yatzy.hpp"
-#include <string.h>
+#include <string>
 
 int Yatzy::Chance(int d1, int d2, int d3, int d4, int d5)
 {
@@ -58,18 +58,12 @@ int Yatzy::Threes(int d1, int d2, int d3, int d4, int d5) {
     return s;
 }
 
-Yatzy::Yatzy()
+Yatzy::Yatzy() : dice(5)
 {
 }
 
-Yatzy::Yatzy(int d1, int d2, int d3, int d4, int _5)
+Yatzy::Yatzy(int d1, int d2, int d3, int d4, int _5) : dice{d1, d2, d3, d4, _5}
 {
-    dice = new int[5];
-    dice[0] = d1;
-    dice[1] = d2;
-    dice[2] = d3;
-    dice[3] = d4;
-    dice[4] = _5;
 }
 
 int Yatzy::Fours()
@@ -142,8 +136,7 @@ int Yatzy::TwoPair(int d1, int d2, int d3, int d4, int d5)
 
 int Yatzy::FourOfAKind(int _1, int _2, int d3, int d4, int d5)
 {
-    int * tallies;
-    tallies = new int[6];
+    std::vector<int> tallies(6);
     tallies[0] = tallies[1] = tallies[2] = 0;
     tallies[3] = tallies[4] = tallies[5] = 0;
     tallies[_1-1]++;
@@ -159,8 +152,7 @@ int Yatzy::FourOfAKind(int _1, int _2, int d3, int d4, int d5)
 
 int Yatzy::ThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
 {
-    int * t;
-    t = new int[6];
+    std::vector<int> t(6);
     t[0] = t[1] = t[2] = 0;
     t[3] = t[4] = t[5] = 0;
     t[d1-1]++;
@@ -177,8 +169,7 @@ int Yatzy::ThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
 
 int Yatzy::SmallStraight(int d1, int d2, int d3, int d4, int d5)
 {
-    int* tallies =new int[6];
-    memset(tallies, 0, sizeof(int)*6);
+    std::vector<int> tallies(6);
     tallies[d1-1] += 1;
     tallies[d2-1] += 1;
     tallies[d3-1] += 1;
@@ -195,8 +186,7 @@ int Yatzy::SmallStraight(int d1, int d2, int d3, int d4, int d5)
 
 int Yatzy::LargeStraight(int d1, int d2, int d3, int d4, int d5)
 {
-    int* tallies = new int[6];
-    memset(tallies, 0, sizeof(*tallies)*6);
+    std::vector<int> tallies(6);
     tallies[d1-1] += 1;
     tallies[d2-1] += 1;
     tallies[d3-1] += 1;
@@ -214,7 +204,7 @@ int Yatzy::LargeStraight(int d1, int d2, int d3, int d4, int d5)
 
 int Yatzy::FullHouse(int d1, int d2, int d3, int d4, int d5)
 {
-    int* tallies;
+    std::vector<int> tallies(6);
     bool _2 = false;
     int i;
     int _2_at = 0;
@@ -224,8 +214,6 @@ int Yatzy::FullHouse(int d1, int d2, int d3, int d4, int d5)
 
 
 
-    tallies = new int[6];
-    memset(tallies, 0, sizeof(int)*6);
     tallies[d1-1] += 1;
     tallies[d2-1] += 1;
     tallies[d3-1] += 1;

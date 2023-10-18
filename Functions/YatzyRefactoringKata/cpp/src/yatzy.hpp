@@ -1,5 +1,6 @@
 #ifndef YATZY_INCLUDED
 #define YATZY_INCLUDED
+#include <vector>
 
 class Yatzy
 {
@@ -12,7 +13,7 @@ public:
     static int Threes(int d1, int d2, int d3, int d4, int d5);
 
 protected:
-    int * dice;
+    std::vector<int> dice;
 public:
     Yatzy();
     Yatzy(int d1, int d2, int d3, int d4, int _5);
