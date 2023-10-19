@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Yatzy
 {
     public class Yatzy
@@ -14,30 +16,18 @@ namespace Yatzy
             dice[4] = _5;
         }
 
-        public static int Chance(int d1, int d2, int d3, int d4, int d5)
-        {
-            var total = 0;
-            total += d1;
-            total += d2;
-            total += d3;
-            total += d4;
-            total += d5;
-            return total;
-        }
 
-        public static int yatzy(params int[] dice)
+        public Dictionary<string, int> ScorePerCategory()
         {
-            var counts = new int[6];
-            foreach (var die in dice)
-                counts[die - 1]++;
-            for (var i = 0; i != 6; i++)
-                if (counts[i] == 5)
-                    return 50;
-            return 0;
-        }
+            Dictionary<string, int> scorePerCategory = new Dictionary<string, int>();
 
-        public static int Ones(int d1, int d2, int d3, int d4, int d5)
-        {
+
+            // try ones
+            int d1 = dice[0];
+            int d2 = dice[1];
+            int d3 = dice[2];
+            int d4 = dice[3];
+            int d5 = dice[4];
             var sum = 0;
             if (d1 == 1) sum++;
             if (d2 == 1) sum++;
@@ -46,22 +36,31 @@ namespace Yatzy
             if (d5 == 1)
                 sum++;
 
-            return sum;
-        }
+            // chance 
+            var total = 0;
+            total += d1;
+            total += d2;
+            total += d3;
+            total += d4;
+            total += d5;
 
-        public static int Twos(int d1, int d2, int d3, int d4, int d5)
-        {
-            var sum = 0;
-            if (d1 == 2) sum += 2;
-            if (d2 == 2) sum += 2;
-            if (d3 == 2) sum += 2;
-            if (d4 == 2) sum += 2;
-            if (d5 == 2) sum += 2;
-            return sum;
-        }
+            //
+            int result = 0;
+            var counts = new int[6];
+            foreach (var die in dice)
+                counts[die - 1]++;
+            for (var k = 0; k != 6; k++)
+                if (counts[k] == 5)
+                    result = 50;
+ 
 
-        public static int Threes(int d1, int d2, int d3, int d4, int d5)
-        {
+            var sumTwos = 0;
+            if (d1 == 2) sumTwos += 2;
+            if (d2 == 2) sumTwos += 2;
+            if (d3 == 2) sumTwos += 2;
+            if (d4 == 2) sumTwos += 2;
+            if (d5 == 2) sumTwos += 2;
+ 
             int s;
             s = 0;
             if (d1 == 3) s += 3;
@@ -69,54 +68,62 @@ namespace Yatzy
             if (d3 == 3) s += 3;
             if (d4 == 3) s += 3;
             if (d5 == 3) s += 3;
-            return s;
-        }
-
-        public int Fours()
-        {
-            int sum;
-            sum = 0;
+ 
+            int sum4;
+            sum4 = 0;
             for (var at = 0; at != 5; at++)
                 if (dice[at] == 4)
-                    sum += 4;
-            return sum;
-        }
+                    sum4 += 4;
 
-        public int Fives()
-        {
-            var s = 0;
+            // Fives
+            var sFive = 0;
             int i;
             for (i = 0; i < dice.Length; i++)
                 if (dice[i] == 5)
-                    s = s + 5;
-            return s;
-        }
-
-        public int sixes()
-        {
-            var sum = 0;
+                    sFive = sFive + 5;
+ 
+            var sumLarge = 0;
             for (var at = 0; at < dice.Length; at++)
                 if (dice[at] == 6)
-                    sum = sum + 6;
-            return sum;
+                    sumLarge = sumLarge + 6;
+ 
+            //
+            var pCounts = new int[6];
+            pCounts[d1 - 1]++;
+            pCounts[d2 - 1]++;
+            pCounts[d3 - 1]++;
+            pCounts[d4 - 1]++;
+            pCounts[d5 - 1]++;
+            int pScore = 0;
+            int atP;
+            for (atP = 0; atP != 6; atP++)
+                if (pCounts[6 - atP - 1] == 2)
+                {
+                    pScore = (6 - atP) * 2;
+                    break;
+                }
+ 
+            scorePerCategory["Ones"] = sum;
+            scorePerCategory["Twos"] = sumTwos;
+            scorePerCategory["Threes"] = s;
+            scorePerCategory["Fours"] = sum4;
+            scorePerCategory["Fives"] = sFive;
+            scorePerCategory["Sixes"] = sumLarge;
+            scorePerCategory["Pair"] = pScore;
+            scorePerCategory["TwoPair"] = TwoPair(d1, d2, d3, d4, d5);
+            scorePerCategory["FourOfAKind"] = FourOfAKind(d1, d2, d3, d4, d5);
+            scorePerCategory["ThreeOfAKind"] = ThreeOfAKind(d1, d2, d3, d4, d5);
+            scorePerCategory["SmallStraight"] = SmallStraight(d1, d2, d3, d4, d5);
+            scorePerCategory["LargeStraight"] = LargeStraight(d1, d2, d3, d4, d5);
+            scorePerCategory["FullHouse"] = FullHouse(d1, d2, d3, d4, d5);
+            scorePerCategory["Yatzy"] = result;
+            scorePerCategory["Chance"] = total;
+
+
+            return scorePerCategory;
         }
 
-        public static int ScorePair(int d1, int d2, int d3, int d4, int d5)
-        {
-            var counts = new int[6];
-            counts[d1 - 1]++;
-            counts[d2 - 1]++;
-            counts[d3 - 1]++;
-            counts[d4 - 1]++;
-            counts[d5 - 1]++;
-            int at;
-            for (at = 0; at != 6; at++)
-                if (counts[6 - at - 1] >= 2)
-                    return (6 - at) * 2;
-            return 0;
-        }
-
-        public static int TwoPair(int d1, int d2, int d3, int d4, int d5)
+        private static int TwoPair(int d1, int d2, int d3, int d4, int d5)
         {
             var counts = new int[6];
             counts[d1 - 1]++;
@@ -138,7 +145,7 @@ namespace Yatzy
             return 0;
         }
 
-        public static int FourOfAKind(int _1, int _2, int d3, int d4, int d5)
+        private static int FourOfAKind(int _1, int _2, int d3, int d4, int d5)
         {
             int[] tallies;
             tallies = new int[6];
@@ -153,7 +160,7 @@ namespace Yatzy
             return 0;
         }
 
-        public static int ThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
+        private static int ThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
         {
             int[] t;
             t = new int[6];
@@ -168,7 +175,7 @@ namespace Yatzy
             return 0;
         }
 
-        public static int SmallStraight(int d1, int d2, int d3, int d4, int d5)
+        private static int SmallStraight(int d1, int d2, int d3, int d4, int d5)
         {
             int[] tallies;
             tallies = new int[6];
@@ -186,7 +193,7 @@ namespace Yatzy
             return 0;
         }
 
-        public static int LargeStraight(int d1, int d2, int d3, int d4, int d5)
+        private static int LargeStraight(int d1, int d2, int d3, int d4, int d5)
         {
             int[] tallies;
             tallies = new int[6];
@@ -204,7 +211,7 @@ namespace Yatzy
             return 0;
         }
 
-        public static int FullHouse(int d1, int d2, int d3, int d4, int d5)
+        private static int FullHouse(int d1, int d2, int d3, int d4, int d5)
         {
             int[] tallies;
             var _2 = false;
