@@ -20,3 +20,7 @@ Functions:
 
 * An uglified version of the [Yatzy Refactoring Kata](https://github.com/emilybache/Yatzy-Refactoring-Kata) - everything moved into one large function and the code mixed up a bit
 * [Refactor Conditionals](https://github.com/emilybache/Refactor-Conditionals/), with the C++ version adapted to use doctest
+
+Classes:
+
+* The [elections kata](https://github.com/SoftwareCraftsmanshipGrenoble/elections) by the Grenoble Software Craft community. Contributed back the C# and C++ versions.
