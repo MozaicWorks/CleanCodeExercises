@@ -10,6 +10,7 @@ Comments:
 
 * [UmbracoCMS](https://github.com/MozaicWorks/Umbraco-CMS/) for the C# files
 * [Inkscape](https://gitlab.com/inkscape/inkscape) for the C++ files
+* [EventBus](https://github.com/greenrobot/EventBus/) for the Java files
 
 Naming:
 
