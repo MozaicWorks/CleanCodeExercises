@@ -24,4 +24,5 @@ Functions:
 
 Classes:
 
+* The [Parrot Refactoring Kata](https://github.com/emilybache/Parrot-Refactoring-Kata) by Emily Bache
 * The [elections kata](https://github.com/SoftwareCraftsmanshipGrenoble/elections) by the Grenoble Software Craft community. Contributed back the C# and C++ versions.
